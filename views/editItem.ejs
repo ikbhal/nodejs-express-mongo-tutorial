@@ -10,7 +10,7 @@
   <body>
     <div class="container">
       <h1>Add Item</h1>
-      <form method="POST" action="/items/update/post">
+      <form method="POST" action="/items/update/<%=item._id%>">
         <div class="form-group">
           <label for="item">Item</label>
           <input type="text" class="form-control" id="item" name="item"

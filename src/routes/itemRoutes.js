@@ -40,4 +40,26 @@ itemRouter.route('/edit/:id').get(function(req, res){
     res.render('editItem', {item: item});
   });
 });
+itemRouter.route('/update/:id').post(function(req, res){
+  Item.findById(req.params.id, function(err, item){
+    if(!item){
+      return next(new Error('Could not load Document'));
+    }else{
+      item.item = req.body.item;
+      item.save().then(item => {res.redirect('/items')})
+        .catch(err => {
+          res.status(400).send("Unable to update the database");
+        });
+    }
+  });
+});
+
+itemRouter.route('/delete/:id').get(function(req, res){
+  Item.findByIdAndRemove({_id:req.params.id},
+    function(err, item){
+      if(err) res.json(err);
+      else res.redirect('/items');
+
+    });
+});
 module.exports = itemRouter;
